@@ -1,0 +1,99 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User account information",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email"]
+    },
+    "Subject": {
+      "title": "Subject",
+      "description": "A subject study area (e.g., Computer Science)",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "userId": { "type": "string" },
+        "syllabusText": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "userId"]
+    },
+    "ExamPaper": {
+      "title": "Exam Paper",
+      "description": "A past paper uploaded by the user",
+      "type": "object",
+      "properties": {
+        "subjectId": { "type": "string" },
+        "userId": { "type": "string" },
+        "fileName": { "type": "string" },
+        "year": { "type": "number" },
+        "extractedText": { "type": "string" },
+        "topics": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["subjectId", "userId"]
+    },
+    "Analysis": {
+      "title": "Analysis",
+      "description": "Aggregated topic frequency and predictions",
+      "type": "object",
+      "properties": {
+        "subjectId": { "type": "string" },
+        "topicFrequency": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "count": { "type": "number" },
+            "importance": { "type": "number" }
+          }
+        },
+        "predictions": { "type": "array" },
+        "coverage": { "type": "number" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      }
+    },
+    "StudyPlan": {
+      "title": "Study Plan",
+      "description": "A personalized schedule",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "plan": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": "UserProfile",
+      "description": "Registry of application users"
+    },
+    "subjects": {
+      "schema": "Subject",
+      "description": "Subjects created by users"
+    },
+    "papers": {
+      "schema": "ExamPaper",
+      "description": "Individual exam papers"
+    },
+    "analysis": {
+      "schema": "Analysis",
+      "description": "Results of AI processing"
+    },
+    "studyPlans": {
+      "schema": "StudyPlan",
+      "description": "Generated study schedules"
+    }
+  }
+}
